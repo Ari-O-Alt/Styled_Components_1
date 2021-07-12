@@ -1,1 +1,1 @@
-# crealytics
+# Styled Component Practice

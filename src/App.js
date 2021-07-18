@@ -1,13 +1,13 @@
 import "./App.css";
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { css, ThemeProvider } from "styled-components";
 
 // creating styles for the first component
 const HeaderOne = styled.h1`
   color: red;
   font-size: 80px;
   text-align: center;
-  color: ${(props) => (props.color ? props.color : "red")};
+  color: ${(props) => (props.color ? props.color : theme.primary.baseColor)};
 `;
 
 // creating styles for the second component
@@ -39,6 +39,13 @@ const SubmitButton = styled.button`
     `}
 `;
 
+// we create a theme for our page; we can access any property on it inside any component nested inside the ThemeProvider component
+const theme = {
+  primary: {
+    baseColor: "#888",
+  },
+};
+
 const App = () => {
   const [buttonPrimary, setButtonPrimary] = React.useState(false);
 
@@ -46,14 +53,19 @@ const App = () => {
     setButtonPrimary(!buttonPrimary);
   };
   return (
-    <div className="App">
-      <HeaderOne color={"green"}>Hello there</HeaderOne>
-      <HeaderTwo primary>This is just an example!</HeaderTwo>
-      <HeaderThree>This will extend the props of HeaderTwo</HeaderThree>
-      <SubmitButton primary={buttonPrimary} onClick={handleChangeButtonStyles}>
-        SUBMIT
-      </SubmitButton>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <HeaderOne color={"green"}>Hello there</HeaderOne>
+        <HeaderTwo primary>This is just an example!</HeaderTwo>
+        <HeaderThree>This will extend the props of HeaderTwo</HeaderThree>
+        <SubmitButton
+          primary={buttonPrimary}
+          onClick={handleChangeButtonStyles}
+        >
+          SUBMIT
+        </SubmitButton>
+      </div>
+    </ThemeProvider>
   );
 };
 

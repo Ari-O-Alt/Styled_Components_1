@@ -1,4 +1,5 @@
 import "./App.css";
+import React from "react";
 import styled, { css } from "styled-components";
 
 // creating styles for the first component
@@ -25,12 +26,33 @@ const HeaderThree = styled(HeaderOne)`
   font-size: 65px;
 `;
 
+// setting styles dinamically based on a state change
+const SubmitButton = styled.button`
+  ${(props) =>
+    props.primary &&
+    css`
+      border-radius: 10px;
+      color: white;
+      background-color: black;
+      border: none;
+      cursor: pointer;
+    `}
+`;
+
 const App = () => {
+  const [buttonPrimary, setButtonPrimary] = React.useState(false);
+
+  const handleChangeButtonStyles = () => {
+    setButtonPrimary(!buttonPrimary);
+  };
   return (
     <div className="App">
       <HeaderOne color={"green"}>Hello there</HeaderOne>
       <HeaderTwo primary>This is just an example!</HeaderTwo>
       <HeaderThree>This will extend the props of HeaderTwo</HeaderThree>
+      <SubmitButton primary={buttonPrimary} onClick={handleChangeButtonStyles}>
+        SUBMIT
+      </SubmitButton>
     </div>
   );
 };
